@@ -10,7 +10,6 @@
     margin: 0;
     padding: 0;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100%;
@@ -19,47 +18,45 @@
   }
 
   .calendar-widget {
-    background: linear-gradient(135deg, #fdfdfd, #f7f7f7);
-    border-radius: 20px;
-    padding: 16px;
+    background: #fff;
+    border-radius: 16px;
     width: 240px;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.07);
-    backdrop-filter: blur(10px);
-    text-align: center;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    overflow: hidden;
     transition: background 0.3s;
   }
 
   .calendar-header {
+    background-color: #d08ff7; /* default header color */
+    padding: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
-  }
-
-  .month-name {
+    color: #fff;
+    font-weight: 600;
     font-size: 16px;
-    font-weight: 500;
-    color: #333;
   }
 
   .arrow {
     cursor: pointer;
     font-size: 18px;
     user-select: none;
-    padding: 4px 8px;
-    border-radius: 12px;
+    padding: 2px 6px;
+    border-radius: 10px;
     transition: background 0.2s;
-    color: #555;
+    color: #fff;
   }
 
   .arrow:hover {
-    background: rgba(0,0,0,0.05);
+    background: rgba(255,255,255,0.2);
   }
 
   .days-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 6px;
+    padding: 10px;
+    background: #fafafa;
   }
 
   .day-name {
@@ -76,23 +73,24 @@
     align-items: center;
     font-size: 12px;
     font-weight: 500;
-    border-radius: 12px; /* pill-like */
+    border-radius: 10px;
     cursor: pointer;
     transition: all 0.2s ease;
     color: #333;
+    background: #fff;
   }
 
   .day:hover {
     transform: translateY(-2px);
     background: #e5e5ff;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
   }
 
   .today {
     background: #ffebef;
     color: #ff1f7c;
     font-weight: 600;
-    box-shadow: 0 2px 6px rgba(255,31,124,0.3);
+    box-shadow: 0 2px 6px rgba(255,31,124,0.2);
   }
 
   .weekend {
@@ -102,7 +100,7 @@
   .themes-container {
     display: flex;
     justify-content: center;
-    margin-top: 12px;
+    margin-top: 8px;
   }
 
   .theme-circle {
@@ -134,10 +132,10 @@
 </div>
 
 <div class="themes-container" id="themes">
-  <div class="theme-circle" style="background: #ffe4e1;" data-theme="#ffe4e1"></div>
-  <div class="theme-circle" style="background: #d8bfd8;" data-theme="#d8bfd8"></div>
-  <div class="theme-circle" style="background: #fdf6e3;" data-theme="#fdf6e3"></div>
-  <div class="theme-circle" style="background: #cfe0e8;" data-theme="#cfe0e8"></div>
+  <div class="theme-circle" style="background: #d08ff7;" data-theme="#d08ff7"></div>
+  <div class="theme-circle" style="background: #fbb1d6;" data-theme="#fbb1d6"></div>
+  <div class="theme-circle" style="background: #a1cfff;" data-theme="#a1cfff"></div>
+  <div class="theme-circle" style="background: #ffd1dc;" data-theme="#ffd1dc"></div>
 </div>
 
 <script>
@@ -153,6 +151,7 @@ const daysGridEl = document.getElementById('days-grid');
 const prevMonthBtn = document.getElementById('prev-month');
 const nextMonthBtn = document.getElementById('next-month');
 const widget = document.getElementById('calendar-widget');
+const header = document.querySelector('.calendar-header');
 
 function renderCalendar(month, year) {
   daysGridEl.innerHTML = "";
@@ -209,7 +208,6 @@ nextMonthBtn.addEventListener('click', () => {
     currentMonth = 0;
     currentYear++;
   }
-  // Limit up to May 2026
   if (currentYear > 2026 || (currentYear === 2026 && currentMonth > 4)) {
     currentMonth = 4;
     currentYear = 2026;
@@ -221,13 +219,13 @@ renderCalendar(currentMonth, currentYear);
 
 // Theme selection
 const themeCircles = document.querySelectorAll('.theme-circle');
-let currentTheme = localStorage.getItem('miniCalendarTheme') || "#fdfdfd";
-widget.style.background = currentTheme;
+let currentTheme = localStorage.getItem('miniCalendarTheme') || "#d08ff7";
+header.style.backgroundColor = currentTheme;
 
 themeCircles.forEach(circle => {
   circle.addEventListener('click', () => {
     const color = circle.dataset.theme;
-    widget.style.background = color;
+    header.style.backgroundColor = color;
     localStorage.setItem('miniCalendarTheme', color);
   });
 });
