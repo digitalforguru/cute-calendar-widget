@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Soft-Girl Apple-Style Mini Calendar 2025-2026</title>
-<link href="https://fonts.cdnfonts.com/css/mogula" rel="stylesheet">
 <style>
   body {
     margin: 0;
@@ -14,7 +13,7 @@
     align-items: center;
     height: 100%;
     background: transparent;
-    font-family: 'Mogula', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "San Francisco", Helvetica, Arial, sans-serif;
   }
 
   .calendar-widget {
@@ -93,10 +92,6 @@
     box-shadow: 0 2px 6px rgba(255,31,124,0.2);
   }
 
-  .weekend {
-    color: #d08ff7;
-  }
-
   .themes-container {
     display: flex;
     justify-content: center;
@@ -126,9 +121,7 @@
     <div class="month-name" id="month-name">January 2025</div>
     <div class="arrow" id="next-month">&#8250;</div>
   </div>
-  <div class="days-grid" id="days-grid">
-    <!-- Day names and days will populate here -->
-  </div>
+  <div class="days-grid" id="days-grid"></div>
 </div>
 
 <div class="themes-container" id="themes">
@@ -150,10 +143,9 @@ const monthNameEl = document.getElementById('month-name');
 const daysGridEl = document.getElementById('days-grid');
 const prevMonthBtn = document.getElementById('prev-month');
 const nextMonthBtn = document.getElementById('next-month');
-const widget = document.getElementById('calendar-widget');
 const header = document.querySelector('.calendar-header');
 
-function renderCalendar(month, year) {
+function renderCalendar(month, year, themeColor = header.style.backgroundColor) {
   daysGridEl.innerHTML = "";
 
   // Day names row
@@ -179,10 +171,13 @@ function renderCalendar(month, year) {
     dayEl.className = 'day';
 
     const today = new Date();
+    const dayOfWeek = new Date(year, month, i).getDay();
+
     if (i === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
       dayEl.classList.add('today');
-    } else if ((new Date(year, month, i)).getDay() === 0 || (new Date(year, month, i)).getDay() === 6) {
-      dayEl.classList.add('weekend');
+    } else if (dayOfWeek === 0 || dayOfWeek === 6) {
+      // Theme-matching weekends
+      dayEl.style.color = themeColor;
     }
 
     dayEl.textContent = i;
@@ -199,7 +194,7 @@ prevMonthBtn.addEventListener('click', () => {
     currentMonth = 11;
     currentYear--;
   }
-  renderCalendar(currentMonth, currentYear);
+  renderCalendar(currentMonth, currentYear, header.style.backgroundColor);
 });
 
 nextMonthBtn.addEventListener('click', () => {
@@ -212,20 +207,18 @@ nextMonthBtn.addEventListener('click', () => {
     currentMonth = 4;
     currentYear = 2026;
   }
-  renderCalendar(currentMonth, currentYear);
+  renderCalendar(currentMonth, currentYear, header.style.backgroundColor);
 });
 
-renderCalendar(currentMonth, currentYear);
+renderCalendar(currentMonth, currentYear, "#d08ff7");
 
 // Theme selection
 const themeCircles = document.querySelectorAll('.theme-circle');
-let currentTheme = localStorage.getItem('miniCalendarTheme') || "#d08ff7";
-header.style.backgroundColor = currentTheme;
-
 themeCircles.forEach(circle => {
   circle.addEventListener('click', () => {
     const color = circle.dataset.theme;
     header.style.backgroundColor = color;
+    renderCalendar(currentMonth, currentYear, color);
     localStorage.setItem('miniCalendarTheme', color);
   });
 });
