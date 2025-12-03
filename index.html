@@ -16,13 +16,24 @@
     font-family: -apple-system, BlinkMacSystemFont, "San Francisco", Helvetica, Arial, sans-serif;
   }
 
+  .calendar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 300px;
+  }
+
   .calendar-widget {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* keeps square shape */
     background: #fff;
     border-radius: 16px;
-    width: 240px;
     box-shadow: 0 6px 15px rgba(0,0,0,0.08);
     overflow: hidden;
     transition: background 0.3s;
+    display: flex;
+    flex-direction: column;
   }
 
   .calendar-header {
@@ -34,6 +45,7 @@
     color: #fff;
     font-weight: 600;
     font-size: 16px;
+    text-transform: lowercase; /* all lowercase */
   }
 
   .arrow {
@@ -54,6 +66,7 @@
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 6px;
+    flex-grow: 1;
     padding: 10px;
     background: #fafafa;
   }
@@ -63,10 +76,10 @@
     font-weight: 500;
     color: #888;
     text-align: center;
+    text-transform: lowercase;
   }
 
   .day {
-    height: 28px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -111,29 +124,37 @@
   .theme-circle:hover {
     transform: scale(1.2);
   }
+
+  @media (max-width: 240px) {
+    .calendar-widget {
+      max-width: 100%;
+    }
+  }
 </style>
 </head>
 <body>
 
-<div class="calendar-widget" id="calendar-widget">
-  <div class="calendar-header">
-    <div class="arrow" id="prev-month">&#8249;</div>
-    <div class="month-name" id="month-name">January 2025</div>
-    <div class="arrow" id="next-month">&#8250;</div>
+<div class="calendar-container">
+  <div class="calendar-widget" id="calendar-widget">
+    <div class="calendar-header">
+      <div class="arrow" id="prev-month">&#8249;</div>
+      <div class="month-name" id="month-name">january 2025</div>
+      <div class="arrow" id="next-month">&#8250;</div>
+    </div>
+    <div class="days-grid" id="days-grid"></div>
   </div>
-  <div class="days-grid" id="days-grid"></div>
-</div>
 
-<div class="themes-container" id="themes">
-  <div class="theme-circle" style="background: #d08ff7;" data-theme="#d08ff7"></div>
-  <div class="theme-circle" style="background: #fbb1d6;" data-theme="#fbb1d6"></div>
-  <div class="theme-circle" style="background: #a1cfff;" data-theme="#a1cfff"></div>
-  <div class="theme-circle" style="background: #ffd1dc;" data-theme="#ffd1dc"></div>
+  <div class="themes-container" id="themes">
+    <div class="theme-circle" style="background: #ffdbe7;" data-theme="#ffdbe7"></div>
+    <div class="theme-circle" style="background: #acbda1;" data-theme="#acbda1"></div>
+    <div class="theme-circle" style="background: #e1cfb9;" data-theme="#e1cfb9"></div>
+    <div class="theme-circle" style="background: #d1e7ff;" data-theme="#d1e7ff"></div>
+  </div>
 </div>
 
 <script>
-const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-const dayNames = ["S","M","T","W","T","F","S"];
+const monthNames = ["january","february","march","april","may","june","july","august","september","october","november","december"];
+const dayNames = ["s","m","t","w","t","f","s"];
 
 let currentDate = new Date();
 let currentMonth = currentDate.getMonth();
