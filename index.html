@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soft-Girl Mini Calendar 2025-2026</title>
+<link href="https://fonts.cdnfonts.com/css/mogula" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    font-family: 'Mogula', sans-serif;
+  }
+
+  .calendar-widget {
+    background: rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 12px;
+    width: 220px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    backdrop-filter: blur(5px);
+    text-align: center;
+  }
+
+  .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .month-name {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .arrow {
+    cursor: pointer;
+    font-size: 18px;
+    user-select: none;
+    padding: 2px 6px;
+    border-radius: 8px;
+    transition: background 0.2s;
+  }
+
+  .arrow:hover {
+    background: rgba(255,255,255,0.2);
+  }
+
+  .days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+  }
+
+  .day-name {
+    font-size: 12px;
+    font-weight: bold;
+    color: #555;
+  }
+
+  .day {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+  }
+
+  .day:hover {
+    transform: scale(1.2);
+  }
+
+  .today {
+    background: #ffd1dc; /* pastel bubble for today */
+    color: #000;
+    font-weight: bold;
+  }
+
+  .weekend {
+    color: #d08ff7; /* pastel weekend color */
+  }
+
+  .themes-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 8px;
+  }
+
+  .theme-circle {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    margin: 0 4px;
+    cursor: pointer;
+    border: 1px solid #fff;
+    transition: transform 0.2s;
+  }
+
+  .theme-circle:hover {
+    transform: scale(1.2);
+  }
+</style>
+</head>
+<body>
+
+<div class="calendar-widget" id="calendar-widget">
+  <div class="calendar-header">
+    <div class="arrow" id="prev-month">&#8249;</div>
+    <div class="month-name" id="month-name">January 2025</div>
+    <div class="arrow" id="next-month">&#8250;</div>
+  </div>
+  <div class="days-grid" id="days-grid">
+    <!-- Day names and days will populate here -->
+  </div>
+</div>
+
+<div class="themes-container" id="themes">
+  <div class="theme-circle" style="background: #ffe4e1;" data-theme="#ffe4e1"></div>
+  <div class="theme-circle" style="background: #d8bfd8;" data-theme="#d8bfd8"></div>
+  <div class="theme-circle" style="background: #fdf6e3;" data-theme="#fdf6e3"></div>
+  <div class="theme-circle" style="background: #cfe0e8;" data-theme="#cfe0e8"></div>
+</div>
+
+<script>
+const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const dayNames = ["S","M","T","W","T","F","S"];
+
+let currentDate = new Date();
+let currentMonth = currentDate.getMonth();
+let currentYear = currentDate.getFullYear();
+
+const monthNameEl = document.getElementById('month-name');
+const daysGridEl = document.getElementById('days-grid');
+const prevMonthBtn = document.getElementById('prev-month');
+const nextMonthBtn = document.getElementById('next-month');
+const widget = document.getElementById('calendar-widget');
+
+function renderCalendar(month, year) {
+  daysGridEl.innerHTML = "";
+
+  // Day names row
+  dayNames.forEach(d => {
+    const dayNameEl = document.createElement('div');
+    dayNameEl.className = 'day-name';
+    dayNameEl.textContent = d;
+    daysGridEl.appendChild(dayNameEl);
+  });
+
+  const firstDay = new Date(year, month, 1).getDay();
+  const lastDate = new Date(year, month + 1, 0).getDate();
+
+  // Fill blank spaces
+  for (let i = 0; i < firstDay; i++) {
+    const empty = document.createElement('div');
+    daysGridEl.appendChild(empty);
+  }
+
+  // Fill days
+  for (let i = 1; i <= lastDate; i++) {
+    const dayEl = document.createElement('div');
+    dayEl.className = 'day';
+
+    const today = new Date();
+    if (i === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+      dayEl.classList.add('today');
+    } else if ((new Date(year, month, i)).getDay() === 0 || (new Date(year, month, i)).getDay() === 6) {
+      dayEl.classList.add('weekend');
+    }
+
+    dayEl.textContent = i;
+    daysGridEl.appendChild(dayEl);
+  }
+
+  monthNameEl.textContent = `${monthNames[month]} ${year}`;
+}
+
+// Navigate months
+prevMonthBtn.addEventListener('click', () => {
+  currentMonth--;
+  if (currentMonth < 0) {
+    currentMonth = 11;
+    currentYear--;
+  }
+  renderCalendar(currentMonth, currentYear);
+});
+
+nextMonthBtn.addEventListener('click', () => {
+  currentMonth++;
+  if (currentMonth > 11) {
+    currentMonth = 0;
+    currentYear++;
+  }
+  // Limit up to May 2026
+  if (currentYear > 2026 || (currentYear === 2026 && currentMonth > 4)) {
+    currentMonth = 4;
+    currentYear = 2026;
+  }
+  renderCalendar(currentMonth, currentYear);
+});
+
+renderCalendar(currentMonth, currentYear);
+
+// Theme selection
+const themeCircles = document.querySelectorAll('.theme-circle');
+let currentTheme = localStorage.getItem('miniCalendarTheme') || "#ffe4e1";
+widget.style.background = currentTheme;
+
+themeCircles.forEach(circle => {
+  circle.addEventListener('click', () => {
+    const color = circle.dataset.theme;
+    widget.style.background = color;
+    localStorage.setItem('miniCalendarTheme', color);
+  });
+});
+</script>
+
+</body>
+</html>
