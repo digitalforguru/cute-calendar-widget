@@ -3,96 +3,106 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Soft-Girl Mini Calendar 2025-2026</title>
+<title>Soft-Girl Apple-Style Mini Calendar 2025-2026</title>
 <link href="https://fonts.cdnfonts.com/css/mogula" rel="stylesheet">
 <style>
   body {
     margin: 0;
     padding: 0;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    height: 100%;
     background: transparent;
     font-family: 'Mogula', sans-serif;
   }
 
   .calendar-widget {
-    background: rgba(255,255,255,0.1);
-    border-radius: 16px;
-    padding: 12px;
-    width: 220px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    backdrop-filter: blur(5px);
+    background: linear-gradient(135deg, #fdfdfd, #f7f7f7);
+    border-radius: 20px;
+    padding: 16px;
+    width: 240px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.07);
+    backdrop-filter: blur(10px);
     text-align: center;
+    transition: background 0.3s;
   }
 
   .calendar-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
   }
 
   .month-name {
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 500;
+    color: #333;
   }
 
   .arrow {
     cursor: pointer;
     font-size: 18px;
     user-select: none;
-    padding: 2px 6px;
-    border-radius: 8px;
+    padding: 4px 8px;
+    border-radius: 12px;
     transition: background 0.2s;
+    color: #555;
   }
 
   .arrow:hover {
-    background: rgba(255,255,255,0.2);
+    background: rgba(0,0,0,0.05);
   }
 
   .days-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 4px;
+    gap: 6px;
   }
 
   .day-name {
     font-size: 12px;
-    font-weight: bold;
-    color: #555;
+    font-weight: 500;
+    color: #888;
+    text-align: center;
   }
 
   .day {
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
+    height: 28px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 12px;
+    font-weight: 500;
+    border-radius: 12px; /* pill-like */
     cursor: pointer;
-    transition: transform 0.2s, background 0.2s;
+    transition: all 0.2s ease;
+    color: #333;
   }
 
   .day:hover {
-    transform: scale(1.2);
+    transform: translateY(-2px);
+    background: #e5e5ff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   }
 
   .today {
-    background: #ffd1dc; /* pastel bubble for today */
-    color: #000;
-    font-weight: bold;
+    background: #ffebef;
+    color: #ff1f7c;
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(255,31,124,0.3);
   }
 
   .weekend {
-    color: #d08ff7; /* pastel weekend color */
+    color: #d08ff7;
   }
 
   .themes-container {
     display: flex;
     justify-content: center;
-    margin-top: 8px;
+    margin-top: 12px;
   }
 
   .theme-circle {
@@ -211,7 +221,7 @@ renderCalendar(currentMonth, currentYear);
 
 // Theme selection
 const themeCircles = document.querySelectorAll('.theme-circle');
-let currentTheme = localStorage.getItem('miniCalendarTheme') || "#ffe4e1";
+let currentTheme = localStorage.getItem('miniCalendarTheme') || "#fdfdfd";
 widget.style.background = currentTheme;
 
 themeCircles.forEach(circle => {
