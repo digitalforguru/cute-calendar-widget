@@ -1,249 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Soft-Girl Apple-Style Mini Calendar 2025-2026</title>
-<style>
-  body {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    background: transparent;
-    font-family: -apple-system, BlinkMacSystemFont, "San Francisco", Helvetica, Arial, sans-serif;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DigitalGuru Calendar Widget</title>
 
-  .calendar-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 300px;
-  }
-
-  .calendar-widget {
-    width: 100%;
-    aspect-ratio: 1 / 1; /* keeps square shape */
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-    overflow: hidden;
-    transition: background 0.3s;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .calendar-header {
-    background-color: #d08ff7; /* default header color */
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #fff;
-    font-weight: 600;
-    font-size: 16px;
-    text-transform: lowercase; /* all lowercase */
-  }
-
-  .arrow {
-    cursor: pointer;
-    font-size: 18px;
-    user-select: none;
-    padding: 2px 6px;
-    border-radius: 10px;
-    transition: background 0.2s;
-    color: #fff;
-  }
-
-  .arrow:hover {
-    background: rgba(255,255,255,0.2);
-  }
-
-  .days-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 6px;
-    flex-grow: 1;
-    padding: 10px;
-    background: #fafafa;
-  }
-
-  .day-name {
-    font-size: 12px;
-    font-weight: 500;
-    color: #888;
-    text-align: center;
-    text-transform: lowercase;
-  }
-
-  .day {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 12px;
-    font-weight: 500;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    color: #333;
-    background: #fff;
-  }
-
-  .day:hover {
-    transform: translateY(-2px);
-    background: #e5e5ff;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
-  }
-
-  .today {
-    background: #ffebef;
-    color: #ff1f7c;
-    font-weight: 600;
-    box-shadow: 0 2px 6px rgba(255,31,124,0.2);
-  }
-
-  .themes-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 8px;
-  }
-
-  .theme-circle {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    margin: 0 4px;
-    cursor: pointer;
-    border: 1px solid #fff;
-    transition: transform 0.2s;
-  }
-
-  .theme-circle:hover {
-    transform: scale(1.2);
-  }
-
-  @media (max-width: 240px) {
-    .calendar-widget {
-      max-width: 100%;
-    }
-  }
-</style>
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
-<div class="calendar-container">
-  <div class="calendar-widget" id="calendar-widget">
-    <div class="calendar-header">
-      <div class="arrow" id="prev-month">&#8249;</div>
-      <div class="month-name" id="month-name">january 2025</div>
-      <div class="arrow" id="next-month">&#8250;</div>
-    </div>
-    <div class="days-grid" id="days-grid"></div>
+<!-- 🌸 BUILDER UI (SAME SYSTEM AS CLOCK) -->
+<div class="builder-ui">
+
+  <div class="widget-header">
+    DigitalGuru's Notion Calendar Widget
   </div>
 
-  <div class="themes-container" id="themes">
-    <div class="theme-circle" style="background: #ffdbe7;" data-theme="#ffdbe7"></div>
-    <div class="theme-circle" style="background: #acbda1;" data-theme="#acbda1"></div>
-    <div class="theme-circle" style="background: #e1cfb9;" data-theme="#e1cfb9"></div>
-    <div class="theme-circle" style="background: #d1e7ff;" data-theme="#d1e7ff"></div>
+  <!-- TIP BOX -->
+  <div id="usageTip" class="usage-tip">
+    Welcome to your Notion widget by DigitalGuru!<br>
+    view your aesthetic monthly calendar layout<br>
+    - click options to customize (themes, fonts, navigation)<br>
+    - copy your embed link<br>
+    - paste into Notion ✧
   </div>
+
+  <!-- CONTROLS -->
+  <div class="top-left-controls">
+
+    <div id="prev-month" class="btn nav-btn" title="previous">‹</div>
+
+    <div id="themeBtn" class="btn theme-btn" title="select theme"></div>
+
+    <div id="fontToggle" class="btn font-toggle-btn" title="font">Aa</div>
+
+    <div id="next-month" class="btn nav-btn" title="next">›</div>
+
+  </div>
+
+  <!-- THEME POPUP -->
+  <div id="themeOptions" class="sign-popup hidden">
+    <div class="sign-title">select theme</div>
+
+    <div class="themes-row">
+      <div class="theme-circle pink" data-theme="pink"></div>
+      <div class="theme-circle beige" data-theme="beige"></div>
+      <div class="theme-circle blue" data-theme="blue"></div>
+      <div class="theme-circle green" data-theme="green"></div>
+    </div>
+  </div>
+
+  <!-- FONT POPUP -->
+  <div id="fontOptions" class="sign-popup hidden">
+    <div class="sign-title">select font</div>
+
+    <div class="font-list">
+      <div class="font-option" data-font="default">default</div>
+      <div class="font-option" data-font="serif">serif</div>
+      <div class="font-option" data-font="mono">mono</div>
+    </div>
+  </div>
+
+  <!-- COPY AREA -->
+  <div class="setup-area">
+    <button id="copyLinkBtn" class="copy-btn">
+      copy my embed Notion link .ᐟ.ᐟ
+    </button>
+
+    <p id="copyMessage" class="copy-message hidden">
+      copied! paste into notion .ᐟ.ᐟ
+    </p>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer-links">
+    <a href="https://stan.store/digitalforguru" target="_blank" class="footer-link">
+      shop digitalguru
+    </a>
+
+    <span class="divider">•</span>
+
+    <a href="https://tiktok.com/@digitaluru" target="_blank" class="footer-link">
+      socials
+    </a>
+  </div>
+
 </div>
 
-<script>
-const monthNames = ["january","february","march","april","may","june","july","august","september","october","november","december"];
-const dayNames = ["s","m","t","w","t","f","s"];
+<!-- 🌿 WIDGET OUTPUT (CALENDAR ONLY) -->
+<div id="calendarWidget" class="widget pink calendar-widget">
 
-let currentDate = new Date();
-let currentMonth = currentDate.getMonth();
-let currentYear = currentDate.getFullYear();
+  <div class="calendar-content">
 
-const monthNameEl = document.getElementById('month-name');
-const daysGridEl = document.getElementById('days-grid');
-const prevMonthBtn = document.getElementById('prev-month');
-const nextMonthBtn = document.getElementById('next-month');
-const header = document.querySelector('.calendar-header');
+    <!-- HEADER -->
+    <div class="calendar-header">
 
-function renderCalendar(month, year, themeColor = header.style.backgroundColor) {
-  daysGridEl.innerHTML = "";
+      <div id="month-name" class="month-name">january</div>
+      <div id="year-name" class="year-name">2025</div>
 
-  // Day names row
-  dayNames.forEach(d => {
-    const dayNameEl = document.createElement('div');
-    dayNameEl.className = 'day-name';
-    dayNameEl.textContent = d;
-    daysGridEl.appendChild(dayNameEl);
-  });
+    </div>
 
-  const firstDay = new Date(year, month, 1).getDay();
-  const lastDate = new Date(year, month + 1, 0).getDate();
+    <div class="divider-line"></div>
 
-  // Fill blank spaces
-  for (let i = 0; i < firstDay; i++) {
-    const empty = document.createElement('div');
-    daysGridEl.appendChild(empty);
-  }
+    <!-- GRID -->
+    <div class="calendar-grid" id="days-grid"></div>
 
-  // Fill days
-  for (let i = 1; i <= lastDate; i++) {
-    const dayEl = document.createElement('div');
-    dayEl.className = 'day';
+  </div>
 
-    const today = new Date();
-    const dayOfWeek = new Date(year, month, i).getDay();
+</div>
 
-    if (i === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
-      dayEl.classList.add('today');
-    } else if (dayOfWeek === 0 || dayOfWeek === 6) {
-      // Theme-matching weekends
-      dayEl.style.color = themeColor;
-    }
-
-    dayEl.textContent = i;
-    daysGridEl.appendChild(dayEl);
-  }
-
-  monthNameEl.textContent = `${monthNames[month]} ${year}`;
-}
-
-// Navigate months
-prevMonthBtn.addEventListener('click', () => {
-  currentMonth--;
-  if (currentMonth < 0) {
-    currentMonth = 11;
-    currentYear--;
-  }
-  renderCalendar(currentMonth, currentYear, header.style.backgroundColor);
-});
-
-nextMonthBtn.addEventListener('click', () => {
-  currentMonth++;
-  if (currentMonth > 11) {
-    currentMonth = 0;
-    currentYear++;
-  }
-  if (currentYear > 2026 || (currentYear === 2026 && currentMonth > 4)) {
-    currentMonth = 4;
-    currentYear = 2026;
-  }
-  renderCalendar(currentMonth, currentYear, header.style.backgroundColor);
-});
-
-renderCalendar(currentMonth, currentYear, "#d08ff7");
-
-// Theme selection
-const themeCircles = document.querySelectorAll('.theme-circle');
-themeCircles.forEach(circle => {
-  circle.addEventListener('click', () => {
-    const color = circle.dataset.theme;
-    header.style.backgroundColor = color;
-    renderCalendar(currentMonth, currentYear, color);
-    localStorage.setItem('miniCalendarTheme', color);
-  });
-});
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>
