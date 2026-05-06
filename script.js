@@ -185,11 +185,16 @@ nextMonthBtn.addEventListener("click", () => {
 window.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
 
-const urlTheme = params.get("theme");
-const urlFont = params.get("font");
+  const urlTheme = params.get("theme");
+  const urlFont = params.get("font");
 
-const savedTheme = urlTheme || localStorage.getItem("calendarTheme") || "pink";
-const savedFont = urlFont || localStorage.getItem("calendarFont") || "default";
+  const savedTheme = isEmbed
+    ? (urlTheme || "pink")   // 👈 embed ONLY uses URL
+    : (localStorage.getItem("calendarTheme") || "pink");
+
+  const savedFont = isEmbed
+    ? (urlFont || "default") // 👈 embed ONLY uses URL
+    : (localStorage.getItem("calendarFont") || "default");
 
   calendarWidget.className = `widget ${savedTheme} calendar-widget`;
   calendarWidget.classList.add(`font-${savedFont}`);
