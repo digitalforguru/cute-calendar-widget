@@ -2,7 +2,6 @@
   width: 210px;
   height: 210px;
 
-  border-radius: 24px;
   padding: 10px;
 
   display: flex;
@@ -10,11 +9,9 @@
 
   overflow: hidden;
 
-  box-shadow:
-    0 18px 50px rgba(0,0,0,0.12),
-    inset 0 1px 0 rgba(255,255,255,0.5);
+  box-sizing: border-box; /* 🔥 IMPORTANT FIX */
 
-  backdrop-filter: blur(16px);
+  gap: 6px;
 }
 
 
@@ -422,12 +419,11 @@ body {
 }
 
 .today {
-  background: rgba(255,255,255,0.25);
   font-weight: 600;
-
   position: relative;
-  border-radius: 8px;
+  border-radius: 6px;
 }
+
 .widget.pink .today { background: rgba(244, 223, 235, 0.9); }
 .widget.beige .today { background: rgba(250, 235, 221, 0.9); }
 .widget.blue  .today { background: rgba(221, 235, 241, 0.9); }
@@ -439,20 +435,27 @@ body {
   position: absolute;
   bottom: 2px;
 
-  width: 2px;  /* 👈 smaller */
-  height: 3px;
+  width: 2px;
+  height: 2px;
 
   border-radius: 50%;
+
+  background: currentColor;
+  opacity: 0.6;
 }
 
 .day-name {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  font-size: 10px;
-  text-transform: lowercase;
+
+  font-size: 9px;
   opacity: 0.5;
+
   text-align: center;
-  margin-bottom: 4px;
+
+  margin-bottom: 2px;
+
+  padding-left: 4px; /* 🔥 THIS shifts it right */
 }
 
 .calendar-content {
@@ -460,9 +463,9 @@ body {
   flex-direction: column;
 
   flex: 1;
-  height: 100%;
+  width: 100%;
 
-  gap: 6px;
+  overflow: hidden;
 }
 
 .calendar-header {
