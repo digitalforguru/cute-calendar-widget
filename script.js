@@ -108,34 +108,37 @@ function renderCalendar(month, year) {
   monthNameEl.textContent = monthNames[month];
   yearNameEl.textContent = year;
 
-  const firstDay = new Date(year, month, 1).getDay();
-  const lastDate = new Date(year, month + 1, 0).getDate();
-
   const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
-  // blank spaces
-  for (let i = 0; i < firstDay; i++) {
-    const empty = document.createElement("div");
-    daysGridEl.appendChild(empty);
-  }
+  // 🍎 GET START OF WEEK (SUNDAY)
+  const startOfWeek = new Date(today);
+  startOfWeek.setDate(today.getDate() - today.getDay());
 
-  // days
-  for (let i = 1; i <= lastDate; i++) {
+  // 🍎 BUILD 7 DAY APPLE ROW
+  const weekDays = Array.from({ length: 7 }).map((_, i) => {
+    const date = new Date(startOfWeek);
+    date.setDate(startOfWeek.getDate() + i);
+
+    return date;
+  });
+
+  weekDays.forEach(date => {
     const dayEl = document.createElement("div");
     dayEl.classList.add("day");
 
     const isToday =
-      i === today.getDate() &&
-      month === today.getMonth() &&
-      year === today.getFullYear();
+      date.toDateString() === today.toDateString();
 
     if (isToday) {
       dayEl.classList.add("today");
     }
 
-    dayEl.textContent = i;
+    // just number (Apple style minimal)
+    dayEl.textContent = date.getDate();
+
     daysGridEl.appendChild(dayEl);
-  }
+  });
 }
 
 /* =========================
