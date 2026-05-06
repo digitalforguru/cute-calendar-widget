@@ -422,26 +422,30 @@ body {
 }
 
 .today {
-  background: rgba(255, 45, 85, 0.12);
-  color: #ff2d55;
+  background: rgba(255,255,255,0.25);
   font-weight: 600;
 
   position: relative;
+  border-radius: 8px;
 }
+.widget.pink .today { background: rgba(244, 223, 235, 0.9); }
+.widget.beige .today { background: rgba(250, 235, 221, 0.9); }
+.widget.blue  .today { background: rgba(221, 235, 241, 0.9); }
+.widget.green .today { background: rgba(221, 237, 234, 0.9); }
 
 .today::after {
   content: "";
-  position: absolute;
-  bottom: 3px;
 
-  width: 4px;
-  height: 4px;
+  position: absolute;
+  bottom: 2px;
+
+  width: 2px;  /* 👈 smaller */
+  height: 3px;
 
   border-radius: 50%;
-  background: #ff2d55;
 }
 
-.week-labels {
+.weekdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   font-size: 10px;
