@@ -109,38 +109,44 @@ function renderCalendar(month, year) {
   yearNameEl.textContent = year;
 
   const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  today.setHours(0,0,0,0);
 
-  // 🍎 GET START OF WEEK (SUNDAY)
-  const startOfWeek = new Date(today);
-  startOfWeek.setDate(today.getDate() - today.getDay());
+  const firstDay = new Date(year, month, 1).getDay();
+  const lastDate = new Date(year, month + 1, 0).getDate();
 
-  // 🍎 BUILD 7 DAY APPLE ROW
-  const weekDays = Array.from({ length: 7 }).map((_, i) => {
-    const date = new Date(startOfWeek);
-    date.setDate(startOfWeek.getDate() + i);
+  const weekdays = ["s","m","t","w","t","f","s"];
 
-    return date;
+  // header
+  weekdays.forEach(d => {
+    const el = document.createElement("div");
+    el.className = "day-name";
+    el.textContent = d;
+    daysGridEl.appendChild(el);
   });
 
-  weekDays.forEach(date => {
+  // blanks
+  for (let i = 0; i < firstDay; i++) {
+    const empty = document.createElement("div");
+    daysGridEl.appendChild(empty);
+  }
+
+  // days
+  for (let day = 1; day <= lastDate; day++) {
     const dayEl = document.createElement("div");
     dayEl.classList.add("day");
 
     const isToday =
-      date.toDateString() === today.toDateString();
+      day === today.getDate() &&
+      month === today.getMonth() &&
+      year === today.getFullYear();
 
-    if (isToday) {
-      dayEl.classList.add("today");
-    }
+    if (isToday) dayEl.classList.add("today");
 
-    // just number (Apple style minimal)
-    dayEl.textContent = date.getDate();
+    dayEl.textContent = day;
 
     daysGridEl.appendChild(dayEl);
-  });
+  }
 }
-
 /* =========================
    ⬅️➡️ NAVIGATION
 ========================= */
