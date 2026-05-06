@@ -510,4 +510,19 @@ body {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
+/* =========================
+   🧼 EMBED MODE CLEANUP
+========================= */
+
+body.embed-mode {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body.embed-mode .widget {
+  box-shadow: none;
+}
 
