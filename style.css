@@ -445,7 +445,7 @@ body {
   border-radius: 50%;
 }
 
-.weekdays {
+.day-name {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   font-size: 10px;
