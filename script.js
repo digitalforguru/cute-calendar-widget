@@ -76,7 +76,10 @@ fontChoices.forEach(option => {
 function copyLink() {
   const base = window.location.origin + window.location.pathname;
 
-  const url = `${base}?widget=calendar&embed=true`;
+  const theme = localStorage.getItem("calendarTheme") || "pink";
+  const font = localStorage.getItem("calendarFont") || "default";
+
+  const url = `${base}?widget=calendar&embed=true&theme=${theme}&font=${font}`;
 
   navigator.clipboard.writeText(url);
 
@@ -180,8 +183,13 @@ nextMonthBtn.addEventListener("click", () => {
 ========================= */
 
 window.addEventListener("DOMContentLoaded", () => {
-  const savedTheme = localStorage.getItem("calendarTheme") || "pink";
-  const savedFont = localStorage.getItem("calendarFont") || "default";
+  const params = new URLSearchParams(window.location.search);
+
+const urlTheme = params.get("theme");
+const urlFont = params.get("font");
+
+const savedTheme = urlTheme || localStorage.getItem("calendarTheme") || "pink";
+const savedFont = urlFont || localStorage.getItem("calendarFont") || "default";
 
   calendarWidget.className = `widget ${savedTheme} calendar-widget`;
   calendarWidget.classList.add(`font-${savedFont}`);
