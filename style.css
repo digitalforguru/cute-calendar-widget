@@ -1,3 +1,23 @@
+.widget {
+  width: 210px;
+  height: 210px;
+
+  border-radius: 24px;
+  padding: 10px;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 18px 50px rgba(0,0,0,0.12),
+    inset 0 1px 0 rgba(255,255,255,0.5);
+
+  backdrop-filter: blur(16px);
+}
+
+
 .calendar-content {
   display: flex;
   flex-direction: column;
@@ -334,27 +354,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-
-.widget {
-  width: 210px;
-  height: 210px; /* 🔥 forces square */
-  
-  border-radius: 24px;
-  padding: 12px;
-
-  display: flex;
-  flex-direction: column;
-
-  box-shadow:
-    0 18px 50px rgba(0,0,0,0.12),
-    inset 0 1px 0 rgba(255,255,255,0.5);
-
-  backdrop-filter: blur(16px);
-
-  transition: all 0.25s ease;
-
-  overflow: hidden; /* 🔥 prevents stretching issues */
-}
 
 /* THEMES */
 .widget.pink { background: #f4dfeb; color: #5c2f4f; }
