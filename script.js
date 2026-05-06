@@ -1,4 +1,6 @@
 const calendarWidget = document.getElementById("calendarWidget");
+const params = new URLSearchParams(window.location.search);
+const isEmbed = params.get("embed") === "true";
 
 /* =========================
    🎨 BUILDER UI ELEMENTS
@@ -183,6 +185,16 @@ window.addEventListener("DOMContentLoaded", () => {
 
   calendarWidget.className = `widget ${savedTheme} calendar-widget`;
   calendarWidget.classList.add(`font-${savedFont}`);
+
+  /* 🧼 CLEAN EMBED MODE */
+  if (isEmbed) {
+    document.body.classList.add("embed-mode");
+
+    // hide builder UI safely
+    document.querySelector(".builder-ui")?.remove();
+    document.querySelector(".setup-area")?.remove();
+    document.querySelector(".footer-links")?.remove();
+  }
 
   renderCalendar(currentMonth, currentYear);
 });
