@@ -5,7 +5,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  height: 100vh;
 }
 
 .widget {
@@ -528,4 +527,24 @@ body.embed-mode {
 body.embed-mode .widget {
   box-shadow: none;
 }
+body.embed-mode {
+  margin: 0;
+  padding: 0;
+  background: transparent !important;
 
+  width: fit-content;
+  height: fit-content;
+  min-height: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body.embed-mode .builder-ui {
+  display: none !important;
+}
+
+body.embed-mode .widget {
+  margin: 0;
+}
