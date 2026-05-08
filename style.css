@@ -516,35 +516,40 @@ body {
    🧼 EMBED MODE CLEANUP
 ========================= */
 
-body.embed-mode {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* =========================
+   🧼 EMBED MODE CLEANUP
+========================= */
+
+html,
+body {
+  background: transparent !important;
 }
 
-body.embed-mode .widget {
-  box-shadow: none;
-}
 body.embed-mode {
-  margin: 0;
-  padding: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+
   background: transparent !important;
 
   width: fit-content;
   height: fit-content;
-  min-height: 0;
+  min-height: 0 !important;
 
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
 }
 
-body.embed-mode .builder-ui {
+body.embed-mode .builder-ui,
+body.embed-mode .setup-area,
+body.embed-mode .footer-links,
+body.embed-mode .widget-header,
+body.embed-mode .usage-tip,
+body.embed-mode .top-left-controls {
   display: none !important;
 }
 
 body.embed-mode .widget {
-  margin: 0;
+  margin: 0 !important;
+  box-shadow: none !important;
 }
