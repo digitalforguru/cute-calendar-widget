@@ -1,7 +1,11 @@
 const calendarWidget = document.getElementById("calendarWidget");
 const params = new URLSearchParams(window.location.search);
 const isEmbed = params.get("embed") === "true";
-
+if (isEmbed) {
+  document.documentElement.style.background = "transparent";
+  document.body.style.background = "transparent";
+  document.body.classList.add("embed-mode");
+}
 /* =========================
    🎨 BUILDER UI ELEMENTS
 ========================= */
@@ -201,7 +205,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
   /* 🧼 CLEAN EMBED MODE */
   if (isEmbed) {
-    document.body.classList.add("embed-mode");
 
     // hide builder UI safely
     document.querySelector(".builder-ui")?.remove();
