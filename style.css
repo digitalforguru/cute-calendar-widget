@@ -269,6 +269,8 @@ body {
 .theme-circle.beige { background-color: #faebdd; }
 .theme-circle.blue { background-color: #ddebf1; }
 .theme-circle.green { background-color: #ddedea; }
+.theme-circle.black { background: #17171a; }
+.theme-circle.white { background: #f8f6f3; border: 1px solid rgba(0,0,0,0.08); }
 
 
 
@@ -358,7 +360,8 @@ body {
 .widget.beige { background: #faebdd; color: #5b4635; }
 .widget.blue  { background: #ddebf1; color: #3f4f64; }
 .widget.green { background: #ddedea; color: #3f5a4c; }
-
+.widget.black { background: #17171a; color: #f5f3f1; }
+.widget.white { background: #f8f6f3; color: #252225; }
 /* =========================
    📅 CALENDAR HEADER
 ========================= */
