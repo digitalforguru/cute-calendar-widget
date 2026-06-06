@@ -20,7 +20,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const monthNameEl = document.getElementById("month-name");
   const yearNameEl = document.getElementById("year-name");
   const daysGridEl = document.getElementById("days-grid");
-
+  const previewMonthNameEl = document.getElementById("preview-month-name");
+const previewYearNameEl = document.getElementById("preview-year-name");
+const previewDaysGridEl = document.getElementById("preview-days-grid");
   const prevMonthBtn = document.getElementById("prev-month");
   const nextMonthBtn = document.getElementById("next-month");
 
@@ -120,39 +122,44 @@ document.addEventListener("DOMContentLoaded", () => {
     saveState();
   }
 
-  function renderCalendar(month, year) {
-    if (!daysGridEl || !monthNameEl || !yearNameEl) return;
+  function renderOneCalendar(month, year, monthEl, yearEl, gridEl) {
+  if (!gridEl || !monthEl || !yearEl) return;
 
-    daysGridEl.innerHTML = "";
+  gridEl.innerHTML = "";
 
-    monthNameEl.textContent = monthNames[month];
-    yearNameEl.textContent = year;
+  monthEl.textContent = monthNames[month];
+  yearEl.textContent = year;
 
-    const today = new Date();
-    const firstDay = new Date(year, month, 1).getDay();
-    const lastDate = new Date(year, month + 1, 0).getDate();
+  const today = new Date();
+  const firstDay = new Date(year, month, 1).getDay();
+  const lastDate = new Date(year, month + 1, 0).getDate();
 
-    for (let i = 0; i < firstDay; i++) {
-      const empty = document.createElement("div");
-      empty.className = "day empty-day";
-      daysGridEl.appendChild(empty);
-    }
-
-    for (let day = 1; day <= lastDate; day++) {
-      const dayEl = document.createElement("div");
-      dayEl.className = "day";
-      dayEl.textContent = day;
-
-      const isToday =
-        day === today.getDate() &&
-        month === today.getMonth() &&
-        year === today.getFullYear();
-
-      if (isToday) dayEl.classList.add("today");
-
-      daysGridEl.appendChild(dayEl);
-    }
+  for (let i = 0; i < firstDay; i++) {
+    const empty = document.createElement("div");
+    empty.className = "day empty-day";
+    gridEl.appendChild(empty);
   }
+
+  for (let day = 1; day <= lastDate; day++) {
+    const dayEl = document.createElement("div");
+    dayEl.className = "day";
+    dayEl.textContent = day;
+
+    const isToday =
+      day === today.getDate() &&
+      month === today.getMonth() &&
+      year === today.getFullYear();
+
+    if (isToday) dayEl.classList.add("today");
+
+    gridEl.appendChild(dayEl);
+  }
+}
+
+function renderCalendar(month, year) {
+  renderOneCalendar(month, year, monthNameEl, yearNameEl, daysGridEl);
+  renderOneCalendar(month, year, previewMonthNameEl, previewYearNameEl, previewDaysGridEl);
+}
 
   function closeMenus() {
     themeOptions?.classList.add("hidden");
